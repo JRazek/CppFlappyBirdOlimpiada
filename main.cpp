@@ -1,40 +1,27 @@
 #include <iostream>
 #include <vector>
 using namespace std;
-int splitSize(string str, char c){
-    int size = 1;
+
+vector<string> split(string str, char divider){
+    vector<string> result;
+
+    string currWord = "";
     for(int i = 0; i < str.size(); i ++){
-        if(str[i] == c){
-            size ++;
+        currWord+=str[i];
+        if(str[i] == divider){
+            result.push_back(currWord);
+            currWord = "";
         }
     }
-    return size;
+    return result;
 }
-string *split(string str, char c){
-    string split;
-    string buff = "";
-    int currSplit = 0;
-    for(int i = 0; i < str.size(); i ++){
-        if(str[i] == c){
-            split[currSplit] = buff;
-            currSplit ++;
-            buff = "";
-        }
-        buff += str[i];
-    }
-    return split;
-}
+
 int main() {
-
-    cout<<split("duupa, duup, dada", ',');
-
-    const int sizeY = 3;
-    int sizeX;
-    cin >> sizeX;
-    int tiles[sizeX][sizeY];
-    for(int y = 0; y < sizeY; y ++){
-        for(int x = 0; x < sizeY; x ++){
-        }
+    string line;
+    getline(cin, line);
+    vector<string> args = split(line, ' ');
+    for(int i = 0; i < args.size(); i ++){
+        cout<<args.at(i);
     }
     return 0;
 }
