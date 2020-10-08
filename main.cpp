@@ -78,7 +78,7 @@ int main() {
         }
         else{
             //in front of...
-            //the problem is that i cant find the actual point
+            //the problem is that i cant find the actual point.
         }
     }
     return 0;
