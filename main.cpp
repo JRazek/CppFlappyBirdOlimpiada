@@ -49,33 +49,38 @@ int main() {
     int wallsCount = stoi(args[0].c_str());
     int end = stoi(args[1]);
     int jumps = 0;
-    Vector2I lastPoint = Vector2I(0,0);//should be last domain
-    for(int i = 0; i < wallsCount; i++){
+    Vector2I lastPoint = Vector2I(0, 0);//should be last domain
+    for (int i = 0; i < wallsCount; i++) {
         getline(cin, line);
         vector<string> args = split(line, ' ');
 
         int x = stoi(args[0].c_str());
         int down = stoi(args[1].c_str());
         int up = stoi(args[2].c_str());
-
-        int maxY = lastPoint.getY() + x;//continuation and the common point with the next wall;
-        if(maxY >= up){
-            maxY-= (up+1);
-            while(!isOKConnection(lastPoint, Vector2I(x, maxY))){
-                maxY--;
+        for(int i = 0; i < 1; i++) {
+            int maxY = lastPoint.getY() + x;//continuation and the common point with the next wall;
+            if (maxY >= up) {
+                maxY = up - 1;
+                while (!isOKConnection(lastPoint, Vector2I(x, maxY))) {
+                    maxY--;
+                }
             }
-           // cout<<x<<" "<<maxY;
-        }
-        Vector2I maxPoint = Vector2I(x, maxY);
-        int mParameter = lastPoint.getY()-lastPoint.getX();
-        int minY = -x + mParameter;
-        if(minY <= down){
-            minY += down - minY;
-            while(!isOKConnection(lastPoint, Vector2I(x, minY))){
-                maxY++;
+            Vector2I maxPoint = Vector2I(x, maxY);
+            int mParameter = lastPoint.getY() - lastPoint.getX();
+            int minY = -x + mParameter;
+            if (minY <= down) {
+                minY = down + 1;
+                while (!isOKConnection(lastPoint, Vector2I(x, minY))) {
+                    minY++;
+                }
             }
+            if (minY >= up || maxY <= down) {
+                cout << "NIE";
+                return 0;
+            }
+           // cout << "\nfrom: " << minY << " to: " << maxY;
         }
-        cout<<x<<" "<<minY;
     }
+    cout<<"end";
     return 0;
 }
