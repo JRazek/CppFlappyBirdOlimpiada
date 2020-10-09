@@ -49,7 +49,7 @@ int main() {
     int wallsCount = stoi(args[0].c_str());
     int end = stoi(args[1]);
     int jumps = 0;
-    Vector2I lastPoint = Vector2I(0,0);
+    Vector2I lastPoint = Vector2I(0,0);//should be last domain
     for(int i = 0; i < wallsCount; i++){
         getline(cin, line);
         vector<string> args = split(line, ' ');
@@ -58,28 +58,24 @@ int main() {
         int down = stoi(args[1].c_str());
         int up = stoi(args[2].c_str());
 
-        int y;
-        if(lastPoint.getY() <= down || lastPoint.getY() >= up){//when it doesnt fit in the bounding
-            if(lastPoint.getY() <= down) {
-                int currentY = down;
-                while (!isOKConnection(lastPoint, Vector2I(x, currentY))) {
-                    currentY++;
-                }
-                if(currentY < up)
-                    y = currentY;
-            }else if(lastPoint.getY() >= up){
-                int currentY = up;
-                while (!isOKConnection(lastPoint, Vector2I(x, currentY))) {
-                    currentY--;
-                }
-                if(currentY > down)
-                    y = currentY;
+        int maxY = lastPoint.getY() + x;//continuation and the common point with the next wall;
+        if(maxY >= up){
+            maxY-= (up+1);
+            while(!isOKConnection(lastPoint, Vector2I(x, maxY))){
+                maxY--;
+            }
+           // cout<<x<<" "<<maxY;
+        }
+        Vector2I maxPoint = Vector2I(x, maxY);
+        int mParameter = lastPoint.getY()-lastPoint.getX();
+        int minY = -x + mParameter;
+        if(minY <= down){
+            minY += down - minY;
+            while(!isOKConnection(lastPoint, Vector2I(x, minY))){
+                maxY++;
             }
         }
-        else{
-            //in front of...
-            //the problem is that i cant find the actual point.
-        }
+        cout<<x<<" "<<minY;
     }
     return 0;
 }
